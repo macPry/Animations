@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     fun setButtons() {
         oneButton.setOnClickListener { changeColor(it) }
         twoButton.setOnClickListener { changeShape(two) }
+        threeButton.setOnClickListener { extend(three) }
     }
 
     fun changeColor(view: View) {
@@ -34,13 +36,13 @@ class MainActivity : AppCompatActivity() {
 
     fun changeShape(view: ImageView) {
         val squareOutAnim = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
-        squareOutAnim.duration = 2000
+        squareOutAnim.duration = 1000
         val circleInAnim = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
-        circleInAnim.duration = 2000
+        circleInAnim.duration = 1000
         val circleOutAnim = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
-        circleOutAnim.duration = 2000
+        circleOutAnim.duration = 1000
         val squareInAnim = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
-        squareInAnim.duration = 2000
+        squareInAnim.duration = 1000
         squareOutAnim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationRepeat(animation: Animation?) {}
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 view.startAnimation(circleInAnim)
             }
         })
-        circleInAnim.setAnimationListener(object :Animation.AnimationListener {
+        circleInAnim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationRepeat(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {
@@ -65,5 +67,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
         view.startAnimation(squareOutAnim)
+    }
+
+    fun extend(view: View) {
+        view.pivotY = 0f
+        view.pivotX = 0f
+        val animator = ObjectAnimator.ofFloat(view, "scaleX", 2f)
+        animator.repeatMode = ObjectAnimator.REVERSE
+        animator.repeatCount = 1
+        animator.start()
     }
 }
