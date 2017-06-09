@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.elpassion.animations.MainActivity">
+    tools:context="pl.elpassion.animations.MainActivity"
+    android:orientation="vertical">
 
     <LinearLayout
         android:gravity="center_horizontal"
@@ -16,6 +17,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:text="Change color" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/two"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/square" />
+
+        <Button
+            android:id="@+id/twoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Change shape" />
 
     </LinearLayout>
 
