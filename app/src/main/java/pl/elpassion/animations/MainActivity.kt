@@ -1,5 +1,6 @@
 package pl.elpassion.animations
 
+import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
@@ -43,24 +44,18 @@ class MainActivity : AppCompatActivity() {
         circleOutAnim.duration = 1000
         val squareInAnim = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
         squareInAnim.duration = 1000
-        squareOutAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {}
-            override fun onAnimationRepeat(animation: Animation?) {}
+        squareOutAnim.setAnimationListener(object : AnimationListenerSimple {
             override fun onAnimationEnd(animation: Animation?) {
                 view.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.circle))
                 view.startAnimation(circleInAnim)
             }
         })
-        circleInAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {}
-            override fun onAnimationRepeat(animation: Animation?) {}
+        circleInAnim.setAnimationListener(object : AnimationListenerSimple {
             override fun onAnimationEnd(animation: Animation?) {
                 view.startAnimation(circleOutAnim)
             }
         })
-        circleOutAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {}
-            override fun onAnimationRepeat(animation: Animation?) {}
+        circleOutAnim.setAnimationListener(object : AnimationListenerSimple {
             override fun onAnimationEnd(animation: Animation?) {
                 view.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.square))
                 view.startAnimation(squareInAnim)
@@ -72,9 +67,21 @@ class MainActivity : AppCompatActivity() {
     fun extend(view: View) {
         view.pivotY = 0f
         view.pivotX = 0f
-        val animator = ObjectAnimator.ofFloat(view, "scaleX", 2f)
+        //ViewPropertyAnimator
+        view.animate()
+                .scaleX(2f)
+                .setDuration(1000)
+                .setListener(object : AnimatorListenerSimple {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        view.animate()
+                                .scaleX(1f)
+                                .setDuration(1000)
+                    }
+                })
+        //ObjectAnimator
+        /*val animator = ObjectAnimator.ofFloat(view, "scaleX", 2f)
         animator.repeatMode = ObjectAnimator.REVERSE
         animator.repeatCount = 1
-        animator.start()
+        animator.start()*/
     }
 }
