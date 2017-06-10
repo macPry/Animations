@@ -65,8 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun extend(view: View) {
-        view.pivotY = 0f
-        view.pivotX = 0f
+        view.apply { pivotX = 0f; pivotY = 0f }
 
         //ViewPropertyAnimator
         view.animate()
