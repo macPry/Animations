@@ -1,13 +1,12 @@
 package pl.elpassion.animations
 
-import android.animation.AnimatorInflater
-import android.animation.ArgbEvaluator
-import android.animation.LayoutTransition
-import android.animation.ObjectAnimator
+import android.animation.*
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.Button
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -75,8 +74,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun extend(view: View) {
-        view.apply { pivotX = 0f; pivotY = 0f }
 
+        //ViewAnimation
+        val scaleAnimation = ScaleAnimation(1f, 2f, 1f, 1f).apply {
+            duration = 1000
+            repeatMode = Animation.REVERSE
+            repeatCount = 1
+        }
+        view.startAnimation(scaleAnimation)
+
+        /*
+        //ObjectAnimator
+        ObjectAnimator.ofFloat(view, "scaleX", 2f).apply {
+            duration = 1000
+            repeatMode = ObjectAnimator.REVERSE
+            repeatCount = 1
+        }.start()
+        */
+
+        /*
         //ViewPropertyAnimator
         view.animate()
                 .scaleX(2f)
@@ -85,20 +101,15 @@ class MainActivity : AppCompatActivity() {
                     view.animate()
                             .scaleX(1f)
                             .setDuration(1000)
-                }
+                }*/
         /*.setListener(object : AnimatorListenerSimple {
             override fun onAnimationEnd(animation: Animator?) {
                 view.animate()
                         .scaleX(1f)
                         .setDuration(1000)
             }
-        })*/
-
-        //ObjectAnimator
-        /*ObjectAnimator.ofFloat(view, "scaleX", 2f).apply {
-            repeatMode = ObjectAnimator.REVERSE
-            repeatCount = 1
-        }.start()*/
+        })
+        */
     }
 
     fun layoutTransition() {
