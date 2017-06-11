@@ -41,40 +41,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeShape(view: ImageView) {
-
-        fun squareIn() = view.animate()
-                .setDuration(1000)
-                .alpha(1f)
-
-        fun circleOut() = view.animate()
-                .setDuration(1000)
-                .alpha(0f)
-                .withEndAction {
-                    view.apply {
-                        setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.square))
-                        alpha = 0f
-                    }
-                    squareIn()
+        val squareOut = ObjectAnimator.ofFloat(view, "alpha", 0f)
+        val circleIn = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f).apply {
+            addListener(object : AnimatorListenerSimple {
+                override fun onAnimationStart(animation: Animator?) {
+                    view.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.circle))
                 }
-
-        fun circleIn() = view.animate()
-                .setDuration(1000)
-                .alpha(1f)
-                .withEndAction {
-                    circleOut()
+            })
+        }
+        val circleOut = ObjectAnimator.ofFloat(view, "alpha", 0f)
+        val squareIn = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f).apply {
+            addListener(object : AnimatorListenerSimple {
+                override fun onAnimationStart(animation: Animator?) {
+                    view.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.square))
                 }
-
-        fun squareOut() = view.animate()
-                .setDuration(1000)
-                .alpha(0f)
-                .withEndAction {
-                    view.apply {
-                        setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.circle))
-                        alpha = 0f
-                    }
-                    circleIn()
-                }
-        squareOut()
+            })
+        }
+        val animatorSet = AnimatorSet()
+        animatorSet.duration = 1000
+        animatorSet.playSequentially(squareOut, circleIn, circleOut, squareIn)
+        animatorSet.start()
     }
 
     fun extend(view: View) {
