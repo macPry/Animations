@@ -1,6 +1,10 @@
 package pl.elpassion.animations
 
 import android.animation.*
+import android.annotation.TargetApi
+import android.app.ActivityOptions
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -25,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         twoButton.setOnClickListener { changeShape(two) }
         threeButton.setOnClickListener { extend(three) }
         fourButton.setOnClickListener { layoutTransition() }
+        image.setOnClickListener { sharedElementTransition() }
     }
 
     fun changeColor(view: View) {
@@ -116,5 +121,12 @@ class MainActivity : AppCompatActivity() {
         val layoutTransition = LayoutTransition().apply { enableTransitionType(LayoutTransition.CHANGING) }
         container.layoutTransition = layoutTransition
         container.addView(Button(this))
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    fun sharedElementTransition() {
+        val intent = Intent(this, TransitionActivity::class.java)
+        val options = ActivityOptions.makeSceneTransitionAnimation(this, image, "image")
+        startActivity(intent, options.toBundle())
     }
 }
