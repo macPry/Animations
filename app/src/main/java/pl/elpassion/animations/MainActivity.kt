@@ -41,16 +41,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeShape(view: ImageView) {
-        val squareOut = ObjectAnimator.ofFloat(view, "alpha", 0f)
-        val circleIn = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f).apply {
+        val squareOut = ObjectAnimator.ofFloat(view, View.ALPHA, 0f)
+        val circleIn = ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f).apply {
             addListener(object : AnimatorListenerSimple {
                 override fun onAnimationStart(animation: Animator?) {
                     view.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.circle))
                 }
             })
         }
-        val circleOut = ObjectAnimator.ofFloat(view, "alpha", 0f)
-        val squareIn = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f).apply {
+        val circleOut = ObjectAnimator.ofFloat(view, View.ALPHA, 0f)
+        val squareIn = ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f).apply {
             addListener(object : AnimatorListenerSimple {
                 override fun onAnimationStart(animation: Animator?) {
                     view.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.square))
