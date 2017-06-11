@@ -9,8 +9,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -66,21 +65,35 @@ class MainActivity : AppCompatActivity() {
     fun extend(view: View) {
 
         //ViewAnimation
-        val scaleAnimation = ScaleAnimation(1f, 2f, 1f, 1f).apply {
+        /*val scaleAnimation = ScaleAnimation(1f, 2f, 1f, 1f).apply {
             duration = 1000
             repeatMode = Animation.REVERSE
             repeatCount = 1
         }
-        view.startAnimation(scaleAnimation)
+        view.startAnimation(scaleAnimation)*/
 
         //ObjectAnimator
-        /*
-        ObjectAnimator.ofFloat(view, View.SCALE_X, 5f).apply {
+        view.pivotX = 0f
+        view.pivotY = 0f
+        ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 2f).apply {
+            val oldWidth = view.width
+            val oldMarginEnd = (view.layoutParams as ViewGroup.MarginLayoutParams).marginEnd
+            val oldX = view.x
             duration = 1000
             repeatMode = ObjectAnimator.REVERSE
             repeatCount = 1
+            addUpdateListener {
+                val fraction = interpolator.getInterpolation(animatedFraction)
+                val width = oldWidth + (fraction * oldWidth)
+                view.x = oldX
+                view.layoutParams.width = width.toInt()
+                val marginLayoutParams = view.layoutParams as ViewGroup.MarginLayoutParams
+                val nme = oldMarginEnd + (fraction * 2 * oldWidth)
+                marginLayoutParams.marginEnd = nme.toInt()
+                view.layoutParams = marginLayoutParams
+                view.requestLayout()
+            }
         }.start()
-        */
 
         /*
         //ViewPropertyAnimator
