@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     fun changeShape(view: ImageView) {
         val squareOut = ObjectAnimator.ofFloat(view, View.ALPHA, 0f)
         val circleIn = ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f).apply {
-            addListener(object : AnimatorListenerSimple {
+            addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     view.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.circle))
                 }
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
         val circleOut = ObjectAnimator.ofFloat(view, View.ALPHA, 0f)
         val squareIn = ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f).apply {
-            addListener(object : AnimatorListenerSimple {
+            addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     view.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.square))
                 }
@@ -73,9 +73,9 @@ class MainActivity : AppCompatActivity() {
         }
         view.startAnimation(scaleAnimation)
 
-        /*
         //ObjectAnimator
-        ObjectAnimator.ofFloat(view, "scaleX", 2f).apply {
+        /*
+        ObjectAnimator.ofFloat(view, View.SCALE_X, 5f).apply {
             duration = 1000
             repeatMode = ObjectAnimator.REVERSE
             repeatCount = 1
