@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeColor(view: View) {
-        view.animate()
         val animator = AnimatorInflater.loadAnimator(this, R.animator.change_color) as ObjectAnimator
         animator.apply {
             target = view
